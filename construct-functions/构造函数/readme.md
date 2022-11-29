@@ -65,3 +65,25 @@ T& operator=(const T& other)//const -> 可以接受左值和右值
 }
 ```
 
+> demo-String
+
+```c++
+//方法1
+String& operator=(const String& other)
+{
+    if(this != &other){
+        delete m_str;
+        m_str = new char[strlen(other.m_str)+1];
+        strcpy(m_str,other.m_str);
+	}
+}
+//方法2
+String& operator=(const String& other)
+{
+    if(this != &other){
+		String temp(other);		//调用深拷贝构造
+        swap(m_str,temp.m_str);	//交换内存
+	}
+}
+```
+
