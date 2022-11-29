@@ -36,3 +36,6 @@
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+
+#debug
+.vscode/
