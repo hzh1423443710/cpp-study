@@ -1,4 +1,4 @@
-### 构造函数
+### 构造函数--函数返回对象
 
 **g++ -fno-elide-constructors**:去优化(关于临时对象构造函数)
 
@@ -17,7 +17,7 @@ A fun2()
 }
 ```
 
-- test3()
+- test3() 不优化
 ```C++
 $ g++ -fno-elide-constructors main.cpp  //去优化编译
 
@@ -34,7 +34,7 @@ obj2.m_a = 10, &boj2 = 0x61fde0         //未优化 地址不一样
 ------
 ```
 
-- test3()
+- test3() 优化
 ```c++
 $ g++ main.cpp                          //优化编译
 A Have parameter construct funciton     //fun1()堆区创建对象a(10)
@@ -46,3 +46,22 @@ In fun2 &a = 0x61fde8                   //打印fun2() 栈区对象的地址
 obj2.m_a = 10, &obj2 = 0x61fde8         //没有拷贝 obj2的地址就是fun2()中栈区a的地址
 ------
 ```
+
+### 拷贝赋值函数
+
+- **拷贝赋值函数与拷贝构造函数一样会有浅拷贝问题**
+
+> **自定义深拷贝赋值函数**
+
+```c++
+T& operator=(const T& other)//const -> 可以接受左值和右值
+{
+    if(this != &other){//防止自引用
+        //delete旧资源
+        //分配新资源
+        //拷贝新数据
+	}
+    return *this;//返回自引用 -> 可以作为左值,链式调用
+}
+```
+
