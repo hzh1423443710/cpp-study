@@ -11,19 +11,19 @@ int main()
     int a = 100;
     int& ra = a;
     int* pra = &ra;
-    //int&* rpa = &ra;          //¡Á  ²»´æÔÚÖ¸ÏòÒıÓÃµÄÖ¸Õë
-    int*& rpa  = pra;           //¡Ì  ´æÔÚÖ¸ÕëµÄÒıÓÃ
+    //int&* rpa = &ra;          //Ã—  ä¸å­˜åœ¨æŒ‡å‘å¼•ç”¨çš„æŒ‡é’ˆ
+    int*& rpa  = pra;           //âˆš  å­˜åœ¨æŒ‡é’ˆçš„å¼•ç”¨
 
-    //int& &rra = ra;           //¡Á  ²»´æÔÚÒıÓÃµÄÒıÓÃ
-    int& rra = ra;              //¡Ì  Ò»°ãÒıÓÃ
+    //int& &rra = ra;           //Ã—  ä¸å­˜åœ¨å¼•ç”¨çš„å¼•ç”¨
+    int& rra = ra;              //âˆš  ä¸€èˆ¬å¼•ç”¨
 
     int x = 1,y = 2,z = 3;
     int arr[] = {x,y,z}; 
-    //int& rarr[3] = {x,y,z};   //¡Á ²»´æÔÚÓÃµÄÊı×é 
-    int (&rarr)[3] = arr;       //¡Ì ´æÔÚÊı×éµÄÒıÓÃ
+    //int& rarr[3] = {x,y,z};   //Ã— ä¸å­˜åœ¨ç”¨çš„æ•°ç»„ 
+    int (&rarr)[3] = arr;       //âˆš å­˜åœ¨æ•°ç»„çš„å¼•ç”¨
 
-    int (*pAdd)(int,int) = add; //º¯ÊıÖ¸Õë
-    int (&rAdd)(int,int) = add; //º¯ÊıÒıÓÃ
+    int (*pAdd)(int,int) = add; //å‡½æ•°æŒ‡é’ˆ
+    int (&rAdd)(int,int) = add; //å‡½æ•°å¼•ç”¨
     cout << rAdd(10,20) << endl;
 
     return 0;

@@ -10,12 +10,12 @@ int fun()
 
 int main()
 {
-    int a = fun();      //(1).num¸³Öµ¸øÁÙÊ±±äÁ¿(2).numÏú»Ù(3).ÁÙÊ±±äÁ¿¸³Öµ¸øa
+    int a = fun();      //(1).numèµ‹å€¼ç»™ä¸´æ—¶å˜é‡(2).numé”€æ¯(3).ä¸´æ—¶å˜é‡èµ‹å€¼ç»™a
     cout << "a = " << a << endl;
 
-    //int& rf = fun();    //¡Á error ÆÕÍ¨ÒıÓÃÖ»ÄÜ½ÓÊÜ×óÖµ
-    const int& rf = fun();//¡Ì 
-    cout << "&rf = " << &rf << " , rf = " << rf << endl;//µØÖ·²»Ò»Ñù
+    //int& rf = fun();    //Ã— error æ™®é€šå¼•ç”¨åªèƒ½æ¥å—å·¦å€¼
+    const int& rf = fun();//âˆš 
+    cout << "&rf = " << &rf << " , rf = " << rf << endl;//åœ°å€ä¸ä¸€æ ·
 
     return 0;
 }
