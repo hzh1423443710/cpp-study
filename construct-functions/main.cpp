@@ -72,32 +72,32 @@ int main()
 
 void test1()
 {
-    A a;
+    A a;    //无参构造
     cout << a.m_a << endl;
     
     cout << "-------------" << endl;
 
-    A a2(10);
+    A a2(10);//有参构造
     cout << a2.m_a << endl;
 
     cout << "-------------" << endl;
 
     A a3;
-    a3 = 100;
+    a3 = 100;   //int型的100隐式转换为右值A 再 operator=(&&)
     cout << "-------------" << endl;
-    a3 = A{100};
+    a3 = A{100};//显式构造
     cout << "-------------" << endl;
-    a3 = a;
+    a3 = a;     //operator=(const&)
 }
 
 void test2()
 {
-    B b;
+    B b;    //无参构造
     cout << "----------" << endl;
-    B b2(b);
+    B b2(b);//拷贝构造
     cout << "----------" << endl;
-    B b3;
-    b3 = b;
+    B b3;   //无参构造
+    b3 = b; //operator=(const&)
 }
 
 void test3()
