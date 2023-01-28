@@ -40,3 +40,6 @@
 #debug
 .vscode/
 *.json
+
+#cmake
+build
