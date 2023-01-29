@@ -1,3 +1,4 @@
+# 函数换名
 $ g++ main.c   
 $ nm main.o  
 0000000000000011 T _Z3funid   
