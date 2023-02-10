@@ -20,14 +20,12 @@ public:
 		std::cout << "construction" << std::endl;
 	}
 	String(const String& other) {
-		delete data;
 		size = other.size;
 		data = new char[size];
 		memcpy(data, other.data, size);
 		std::cout << "copy construction" << std::endl;
 	}
 	String(String&& other) noexcept :String() {
-		delete data;
 		size = other.size;
 		data = other.data;
 		other.data = nullptr;
