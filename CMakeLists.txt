@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(moss)
+set(CMAKE_CXX_STANDARD 17)
 
-set(SOURCE_DIR construct-functions/static-member-function)
+project(LearnCpp)
 
-add_executable(${PROJECT_NAME} ${SOURCE_DIR}/main.cpp)
+add_subdirectory("./0test")
+
+# add_compile_options(-fno-elide-constructors)  
+set(PROJECT_SOURCES "./smart_ptr/main.cpp")
+
+add_executable("LearnCpp" ${PROJECT_SOURCES})
