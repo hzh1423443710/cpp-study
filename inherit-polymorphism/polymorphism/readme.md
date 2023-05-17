@@ -1,4 +1,4 @@
-### 重写虚函数的条件
+## 重写虚函数的条件
 
 - 类的成员函数 (**全局函数,静态成员函数,构造函数不行**)
 - 基类中要加virtual
@@ -20,3 +20,8 @@ C* pc = static_cast<C*>(pa);    //能转换但不合理 间接的向下转:B->A-
 //C* pc = dynamic_cast<C*>(pa); //报错 dynamic_cast 可以检测不合理的转换
 ```
 
+
+
+## 实现类似虚拷贝构造函数
+
+VirtualCopyConstructors.cpp
