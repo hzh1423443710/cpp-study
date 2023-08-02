@@ -343,7 +343,7 @@ enable_int_if_t<true> a; // 编译成功
 - `std::decay<T>` : 衰退
 
   - 1. **先去除引用**
-    2. 如果是函数名, 将函数名转化为指针
+    2. 如果是函数签名, 将函数签名转化为函数指针
     3. 如果是数组(有`[]`), 去除`[]`转化为指针
     4. 如果T有`const` 或`volatile`限定, 去除
     
@@ -353,7 +353,7 @@ enable_int_if_t<true> a; // 编译成功
     using A = std::decay_t<int (&)[3][4][5]>;// int(*)[4][5]
     using B = std::decay_t<const int*>; // const int* 
     
-    // 函数类型 -> 函数指针
+    // 函数签名 -> 函数指针
     using C = std::decay_t<int(int)>; // int(*)(int)
     std::cout << std::is_same_v<decltype(pfun), void(int,int)> << "\n"; // true
     std::cout << std::is_same_v<decltype(&pfun), void(*)(int,int)> << "\n"; // true
