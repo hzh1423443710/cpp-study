@@ -1,48 +1,5 @@
 # 函数对象
 
-如果一个类将()运算符重载为成员函数，这个类就称为函数对象类，这个类的对象就是函数对象。
-
-> ()是目数不限的运算符，因此重载为成员函数时，有多少个参数都可以。
-
-`#include <functional >`
-
- **成员函数 T operator ( const T & x, const T & y) 的功能**
-
-| 函数对象类模板 | 功能          |
-| -------------- | ------------- |
-| plus <T>       | return x + y; |
-| minus < >      | return x - y; |
-| multiplies <T> | return x * y; |
-| divides <T>    | return x / y; |
-| modulus <T>    | return x % y; |
-
-**成员函数 bool operator( const T & x, const T & y) 的功能**
-
-| 函数对象类模板    | 功能             |
-| ----------------- | ---------------- |
-| equal_to <T>      | return x == y;   |
-| not_equal_to <T>  | return x! = y;   |
-| greater <T>       | return x > y;    |
-| less <T>          | return x < y;    |
-| greater_equal <T> | return x > = y;  |
-| less_equal <T>    | return x <= y;   |
-| logical_and <T>   | return x && y;   |
-| logical_or <T>    | return x \|\| y; |
-
-**成员函数 T operator( const T & x) 的功能**
-
-| 函数对象类模板 | 功能        |
-| -------------- | ----------- |
-| negate <T>     | return - x; |
-
-**成员函数 bool operator( const T & x) 的功能**                    
-
-| 函数对象类模板  | 功能        |
-| --------------- | ----------- |
-| logical_not <T> | return ! x; |
-
-
-
 # 1.查找算法
 
 - [x] adjacent_find : 查重==第一个==相邻重复元素,返回首个元素iter

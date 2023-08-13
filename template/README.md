@@ -44,6 +44,14 @@ template<class T1, class T2 = T1*> // T2引用T1
 
 
 
+显示实例化声明
+
+```c++
+template void swap<int>(int &a,int &b); 
+```
+
+
+
 ### 特化
 
 函数模板(包括成员函数)**只有全特化**,没有局部特化.
