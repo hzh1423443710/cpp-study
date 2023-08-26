@@ -286,5 +286,86 @@ std::cout << "duration = " << std::chrono::duration_cast<std::chrono::duration<d
 
 high_resolution_clock是系统可用的**最高精度的时钟**。实际上high_resolution_clock只不过是system_clock或者steady_clock的typedef
 
+ 
 
+# 计时器
+
+### sleep 1 秒
+
+```c++
+#include <chrono>
+#include <thread>
+
+int main()
+{
+	auto time_start = std::chrono::high_resolution_clock::now();//开始
+
+	using namespace std::chrono_literals;
+	std::this_thread::sleep_for(1s);	//sleep 1s
+
+	std::chrono::steady_clock::time_point time_end = std::chrono::high_resolution_clock::now();//结束
+	
+	std::chrono::duration<float> duration = time_end - time_start;
+	std::cout << duration.count() << "s" << std::endl;//打印
+
+	return 0;
+}
+```
+
+### 对象生命周期计时
+
+```c++
+//计时
+class Timer
+{
+public:
+	Timer():m_duration() {
+		m_startTime = std::chrono::high_resolution_clock::now();
+	}
+	~Timer() {
+		m_duration = std::chrono::high_resolution_clock::now() - m_startTime;
+		std::cout << m_duration.count() << "s" << std::endl;
+		std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(m_duration).count()
+            << "ms" << std::endl;//转换成毫秒
+	}
+private:
+	std::chrono::time_point<std::chrono::steady_clock> m_startTime;
+	std::chrono::duration<float> m_duration;
+};
+
+int main()
+{
+	using namespace std::chrono_literals;
+	{
+		Timer time;
+		for (int i = 0; i < 100; i++) {//打印100次
+			std::cout << "Hello Chrono!" << std::endl;
+			//std::cout << "Hello Chrono!\n";//更快
+		}
+		//std::this_thread::sleep_for(1s);//睡 1s
+	}
+
+	return 0;
+}
+```
+
+
+
+```c++
+//计时
+class Timer
+{
+public:
+	Timer() {
+		m_startTime = std::chrono::high_resolution_clock::now();
+	}
+	~Timer() {
+		auto end = std::chrono::high_resolution_clock::now();
+		//转换成毫秒
+		std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - m_startTime).count() << "ms" << std::endl;
+	}
+private:
+	std::chrono::time_point<std::chrono::high_resolution_clock> m_startTime;
+};
+```
 
