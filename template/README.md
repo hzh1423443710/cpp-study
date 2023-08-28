@@ -233,6 +233,103 @@ test(1,2,3,4);
 
 
 
+## 类型推导
+
+### auto
+
+- 去除`cv` `&`限定符(const,volatile, reference)
+
+```c++
+int 		 i = 1;
+int &		ri = i;
+int const&	cri = i;
+auto x =   i; // int
+auto y =  ri; // int
+auto z = cri; // int
+```
+
+- 添加const和&
+
+```c++
+int i = 1;
+auto const	ci = i;	// int const
+auto &	   	ri = i;	// int &
+auto const&	cri = i;// int cont&
+```
+
+- auto返回类型推导(值返回)
+
+
+
+### decltype
+
+保留`cv` `&` 限定符(const,volatile, reference)
+
+```c++
+int		     i = 1;
+int &       ri = i;
+int const& cri = i;
+using T1 = decltype(i);   // int
+using T2 = decltype(ri);  // int &
+using T3 = decltype(cri); // int const&
+decltype(cri) y = i; // int const&
+// 保留cv和&
+decltype(auto) x = i;	// int
+decltype(auto) y = ri;	// int &
+decltype(auto) z = cri;	// int const &
+```
+
+- decltype(auto) 返回类型推导 (保留const reference)
+- 尾置返回类型
+
+
+
+### 类模板参数推导
+
+- **(<=C++14)**, types must be given explicitly
+- **(> C++14)**, Class Template Parameter Deduction
+
+```c++
+std::pair<int,int> p{1,1}; // C++ <= 14 显式地提供模板参数
+std::pair p{1,1}; // C++ > 14
+```
+
+- Template Parameter Deduction Guides
+
+让编译器自动推导模板参数，而无需显式地指定模板参数, 从构造函数参数推导
+
+```c++
+std::pair p(2, 4.5);     // 推导出 std::pair<int, double> p(2, 4.5);
+std::tuple t(4, 3, 2.5); // 同 auto t = std::make_tuple(4, 3, 2.5);
+```
+
+> 类模板不支持聚合初始化
+
+```c++
+template <class Key, class Value>
+struct Pair {
+	Key m_key;
+	Value m_value;
+	// Constructor 1
+	Pair(const Key& key, const Value& value) : m_key(key), m_value(value) {}
+	// Constructor 2
+	template <class Pa>
+	Pair(const Pa& pa) : m_key(pa.first), m_value(pa.second) {}
+};
+
+// Constructor 1 deduction guide
+template <class Key, class Value>
+Pair(Key, Value) -> Pair<Key, Value>; // ->左侧构造函数签名 ->右侧类模板实例类型
+// Constructor 2 deduction guide
+template <class Pa>
+Pair(const Pa&) -> Pair<typename Pa::first_type, typename Pa::second_type>;
+
+// 自动推导
+std::pair<int, int> p{1, 1};
+Pair x(p);    // Constructor 1
+Pair x2{1, 2};// Constructor 2
+```
+
 
 
 ## type_traits
