@@ -237,7 +237,7 @@ test(1,2,3,4);
 
 ### auto
 
-- 去除`cv` `&`限定符(const,volatile, reference)
+- 去除`cv` `&`限定符(const,volatile, reference) 指针除外
 
 ```c++
 int 		 i = 1;
@@ -255,6 +255,19 @@ int i = 1;
 auto const	ci = i;	// int const
 auto &	   	ri = i;	// int &
 auto const&	cri = i;// int cont&
+```
+
+- 对于指针, 保留外层const和指针
+
+```c++
+int* p1;
+const int* p2;
+int* const p3{};
+const int* const p4{};
+auto x1 = p1;  // int*
+auto x2 = p2;  // const int*
+auto x3 = p3;  // int*
+auto x4 = p4;  // const int*
 ```
 
 - auto返回类型推导(值返回)
