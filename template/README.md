@@ -316,32 +316,9 @@ std::pair p(2, 4.5);     // 推导出 std::pair<int, double> p(2, 4.5);
 std::tuple t(4, 3, 2.5); // 同 auto t = std::make_tuple(4, 3, 2.5);
 ```
 
-> 类模板不支持聚合初始化
+> 类模板不支持聚合初始化(必须要有相应的构造函数)
 
-```c++
-template <class Key, class Value>
-struct Pair {
-	Key m_key;
-	Value m_value;
-	// Constructor 1
-	Pair(const Key& key, const Value& value) : m_key(key), m_value(value) {}
-	// Constructor 2
-	template <class Pa>
-	Pair(const Pa& pa) : m_key(pa.first), m_value(pa.second) {}
-};
-
-// Constructor 1 deduction guide
-template <class Key, class Value>
-Pair(Key, Value) -> Pair<Key, Value>; // ->左侧构造函数签名 ->右侧类模板实例类型
-// Constructor 2 deduction guide
-template <class Pa>
-Pair(const Pa&) -> Pair<typename Pa::first_type, typename Pa::second_type>;
-
-// 自动推导
-std::pair<int, int> p{1, 1};
-Pair x(p);    // Constructor 1
-Pair x2{1, 2};// Constructor 2
-```
+- [C++17 显式推导指引](./typeDeduction/explicit_TDguide.cpp)
 
 
 
@@ -378,7 +355,7 @@ std::cout << isEven(3) << "\n"; // false
 
 **Example_2:** bool为false禁用特定的模板实例化
 
-[构造函数为万能引用时, 如何做到不接受自己类型](./enable_if.cpp)
+[构造函数为万能引用时, 如何做到不接受自己类型](./SFINAE/enable_if.cpp)
 
 ```c++
 // 自实现
@@ -600,7 +577,7 @@ constexpr bool my_is_same_v = my_is_same<T1,T2>::value;
 
 **类型萃取:** 
 
-[Example_1](./traits_1.cpp): 固定萃取, 使accumulate不溢出
+[Example_1](./traits.cpp): 固定萃取, 使accumulate不溢出
 
 
 
@@ -628,7 +605,32 @@ constexpr bool my_is_same_v = my_is_same<T1,T2>::value;
 
    `_v`后缀**[C++17]**: 代表值, 如`std::is_same_v<int,float>`等价于`std::is_same<int,float>::value`
 
-5. `SFNAE`: [替换失败不是错误](./SFNAE.cpp)
+5. `SFINAE`: [替换失败不是错误](./SFINAE/SFINAE.cpp)
+
+   使用某些特定模板参数实例化模板失败不会导致错误，而**只是丢弃**该实例化
+
+   ```c++
+   template <class T, class Enable = void>
+   class foo;
+   
+   template <class T> // 替换 const char* 失败 丢弃
+   class foo<T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, const char*>>> {
+   public:
+       T val;
+       foo(const T&& val) : val(val) {}
+   };
+   
+   
+   template <class T> // 替换 const char* 成功
+   class foo<T, std::enable_if_t<std::is_same_v<std::decay_t<T>, const char*>>> {
+   public:
+       const char* val;
+       foo(const char* str) : val(str) {}
+   };
+   
+   template<class T>
+   foo(T) -> foo<T,void>;
+   ```
 
 
 
