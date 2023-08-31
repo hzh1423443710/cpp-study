@@ -2,13 +2,19 @@
 
 #include <memory>
 
-class WW
-{
+class Widget {
 public:
-    WW();
-    ~WW();
-    void doSomething();
+    Widget();
+	~Widget();
+	void fun();
+	int num() const;
+	void increase();
+	Widget &operator=(Widget &&);
+	Widget(Widget &&);
+
 private:
-    class Impl;
-    std::unique_ptr<Impl> m_ptr;
+	Widget &operator=(const Widget &) = delete;
+	Widget(const Widget &) = delete;
+	class Impl;
+    std::unique_ptr<Impl> m_pImpl;
 };
