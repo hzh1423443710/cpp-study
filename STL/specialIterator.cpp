@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 #include <sstream>
+#include <vector>
 
 void testContainerManipulators();
 void testStreamIterators();

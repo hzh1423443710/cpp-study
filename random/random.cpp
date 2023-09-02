@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 #include <numeric>
+#include <functional>
 
 // 自定义-随机数生成器
 class XorShift32 {
