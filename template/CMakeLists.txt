@@ -18,3 +18,5 @@ add_executable(enable_if ./SFINAE/enable_if.cpp)
 add_executable(SFINAE_example1 ./SFINAE/SFINAE.cpp)
 
 add_executable(traits traits.cpp)
+# 完美转发
+add_executable(perfect_forwarding perfect_forwarding.cpp)
