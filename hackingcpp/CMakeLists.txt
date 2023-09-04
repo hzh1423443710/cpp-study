@@ -6,4 +6,4 @@ project(test-hackingcpp LANGUAGES CXX)
 
 add_executable(ascending_seqence ascending_seqence.cpp)
 add_executable(bstree bstree/main.cpp bstree/bstree.hpp)
-add_executable(prefect_forwarding prefect_forwarding.cpp)
+add_executable(myList ./List/main.cpp ./List/mylist.hpp)
