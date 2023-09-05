@@ -1,5 +1,15 @@
 # 泛型编程
 
+## Lambda
+
+lambda+auto 等于 模板lambda
+
+lambda 作为函数参数: 通常用[&]存储引用, 用`template<class Func>`然后`const Func&` 做类型
+
+lambda 作为返回值: 总是用[=]存储值, 用auto返回
+
+
+
 ## 模板
 
 ### 分类
