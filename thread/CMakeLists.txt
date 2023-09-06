@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(test-thread)
 
 add_executable(thread_1 main.cpp)
+add_executable(parallel_accumulate parallel_accumulate.cpp)
