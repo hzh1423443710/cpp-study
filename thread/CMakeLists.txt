@@ -4,5 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(test-thread)
 
-add_executable(thread_1 main.cpp)
-add_executable(parallel_accumulate parallel_accumulate.cpp)
+# 并行accumulate
+add_executable(parallel_accumulate ./parallel_accumulate/parallel_accumulate.cpp)
+# 线程安全队列
+add_executable(threadsafe_queue ./threadsafe_queue/threadsafe_queue.hpp ./threadsafe_queue/main.cpp)

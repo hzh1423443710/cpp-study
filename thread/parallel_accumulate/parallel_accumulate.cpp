@@ -19,6 +19,7 @@ Ret parallel_accumulate(Iterator first, Iterator last, Ret init) {
 	const int hardware_threads = std::thread::hardware_concurrency();
 	const int nums_thread = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
 
+	// 主线程占一个线程
 	std::vector<std::thread> threads(nums_thread - 1);
 	std::vector<Ret> results(nums_thread);
 
