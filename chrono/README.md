@@ -69,9 +69,9 @@ cout << "程序段运行时间为：" << double(end_t - start_t)/CLOCKS_PER_SEC 
 
 chrono库主要包含了三个概念：duration, time_point 和 clock
 
-## 1.chrono::duration
+## 时延
 
-时间间隔
+chrono::duration 时间间隔
 
 - duration描述的是一段时间范围，比如10秒钟，两个小时，三个月…
 
@@ -127,7 +127,7 @@ typedef duration<int, ratio< 60>>   minutes;
 typedef duration<int, ratio<3600>>  hours;
 ```
 
-### **count**
+count
 
 通过使用**内部函数cout**，我们可以得到这一段时间的**数值**
 
@@ -143,7 +143,7 @@ std::cout << hour.count() << "h\n";     // 24h
 std::cout << min.count() << "min\n";    // 30min
 ```
 
-### 运算
+运算
 
 ```c++
 std::chrono::seconds sec1(60);  // 60s
@@ -165,36 +165,18 @@ std::cout << "After `hour1` is assigned to `min2`, min2 = " << min2.count() << "
 std::cout << "After `sec1` is assigned to `sec2`, sec2 = " << sec2.count() << "s\n";  // 7200  
 ```
 
-### 时间单位转换
+时间单位转换
 
-为了方便我们对于不同单位时间的转化，chrono库提供了**duration_cast类型转换函数模板**。
+​	当**不要求截断值**的情况下(时转换成秒是没问题，但是秒转换成时就不行)时延的转换是**隐式的**。显示转换可以由`std::duration_cast<>`来完成
 
-```c++
-template <class ToDuration, class Rep, class Period>
-constexpr ToDuration duration_cast (const duration<Rep,Period>& dtn);
-```
-
-Example:
-
-```c++
-std::chrono::seconds sec1(60);  // 60s
-std::chrono::minutes min1(60);  // 60min
-std::chrono::hours hour1(2);    // 2h
-
-// Use:duration_cast<>() 向高ratio 低ratio 转换都支持
-// hours -> seconds  
-std::chrono::seconds var1 =  std::chrono::duration_cast<std::chrono::seconds>(hour1);
-std::cout << "variable `hour1` convert to seconds : " << var1.count() << "s\n"; // 7200s
-// seconds -> minutes
-std::chrono::minutes var2 =  std::chrono::duration_cast<std::chrono::minutes>(sec1);
-std::cout << "variable `sec1` convert to minutes : " << var2.count() << "min\n"; // 1min
-```
+- 不截断(大转小), 隐式转换
+- 小转大, 必须显示转换
 
 
 
-## 2.chrono::time_point
+## 时间点
 
-时间点 时刻
+chrono::time_point 时间点 时刻
 
 ​	通过一个相对epoch的时间间隔duration来实现，epoch就是1970-1-1时刻，对于同一个时钟来说，所有的time_point的epoch都是固定的。这个类可以与标准库ctime结合起来显示时间，ctime内部的time_t类型就是代表这个秒数。
 
@@ -203,13 +185,13 @@ template<typename _Clock, typename _Dur = typename _Clock::duraion>
 class time_point{};
 ```
 
-第一个参数:当前计时使用的时钟，可选为“system_colck”、“steady_colck”、“high_resolution_clock”或者是自定义的时钟类
+第一个参数:当前计时使用的时钟, "system_colck", "steady_colck", "high_resolution_clock"或者是自定义的时钟类
 
 第二个参数:时间间隔，**默认为使用的时钟相同的间隔** 不同的时钟有不同的duration(内部维护)
 
 
 
-### time_since_epoch
+time_since_epoch
 
 和C语言中`time()`函数相同，返回从1970-01-01 00:00:00 到系统当前时间**所经过的时间**，以秒为单位。
 
@@ -225,15 +207,17 @@ std::cout << "C Style : " << time(nullptr) << "s\n";
 
 
 
-## 3.chrono::clock
+## 时钟
 
-时钟
+chrono::clock 时钟
 
-clock包含`system_clock`, `steady_clock `和 `high_resolution_clock`
+clock包含`system_clock`, `steady_clock` 和 `high_resolution_clock`
 
-### system_clock
 
-系统时钟
+
+system_clock-系统时钟
+
+如果需要表示当前的日期和时间，应该使用**系统的墙上时钟**
 
 **now()**		 : 获取当前时刻 time_point
 **to_time_t()**   : time_point 转换为 time_t类型
@@ -262,29 +246,28 @@ std::cout << "Tomorrow is\t" << std::ctime(&tt);// Tomorrow is     Tue May  2 14
 
 
 
-### steady_clock
+steady_clock
 
-steady_clock专门用于**计算时间差**的工具，steady_clock 类只有一个**静态函数now()**,用于获取当前的时间
+如果要**测量经过的时间**, 应该选择使用**单调递增的时钟**, 以避免受到系统时间调整的干扰
+
+只有一个**静态函数now()**, 返回值没有实际意义, 只是单调递增而已 
 
 ```c++
 auto start = std::chrono::steady_clock::now();
-
 for(int i = 0; i < 1000000000;i++) {}
-
 auto end = std::chrono::steady_clock::now();
-
 auto diff = end - start;
 // 转为double
-std::cout << "duration = " << std::chrono::duration_cast<std::chrono::duration<double>>(diff).count() <
-    < "s\n"; 
+std::cout << "duration = " << std::chrono::duration_cast<std::chrono::duration<double>>(diff).count()
+    		<< "s\n"; 
 // duration = 0.351719s
 ```
 
 
 
-### high_resolution_clock
+high_resolution_clock
 
-high_resolution_clock是系统可用的**最高精度的时钟**。实际上high_resolution_clock只不过是system_clock或者steady_clock的typedef
+high_resolution_clock是系统可用的**最高精度的时钟**。实际上high_resolution_clock只不过是system_clock的typedef. 精度通常取决于操作系统和硬件平台
 
  
 
