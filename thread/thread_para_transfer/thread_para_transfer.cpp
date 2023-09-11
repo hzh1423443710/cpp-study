@@ -27,6 +27,11 @@ void test_ref_transfer() {
 	Parameter para;
 	std::thread([](Parameter& para) {}, std::ref(para)).join();	 // 只构造1次
 }
+// 4. 常引用传参
+void test_cref_transfer() {
+	Parameter para;
+	std::thread([](const Parameter& para) {}, std::cref(para)).join(); // 只构造1次
+}
 
 /*
 std::thread 构造函数
@@ -46,6 +51,8 @@ int main(int argc, char* argv[]) {
 	test_name_obj();
 	std::cout << "----------------------------------------test_ref_transfer" << "\n";
 	test_ref_transfer();
+	std::cout << "----------------------------------------test_cref_transfer" << "\n";
+	test_cref_transfer();
 
 	return 0;
 }
