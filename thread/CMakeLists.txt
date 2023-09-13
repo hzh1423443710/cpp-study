@@ -10,3 +10,7 @@ add_executable(thread_para_transfer ./thread_para_transfer/thread_para_transfer.
 add_executable(parallel_accumulate ./parallel_accumulate/parallel_accumulate.cpp)
 # 线程安全队列
 add_executable(threadsafe_queue ./threadsafe_queue/threadsafe_queue.hpp ./threadsafe_queue/main.cpp)
+# 原子操作
+add_executable(atomic_flag ./atomic_flag/main.cpp)
+# 读写锁
+add_executable(rwlock ./rwlock/main.cpp)
