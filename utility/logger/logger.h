@@ -6,28 +6,37 @@
 namespace hzh {
 namespace utility {
 
-#define DEBUG(fmt, ...) \
-	Logger::getInstance()->log(Logger::DEBUG, __FILE__, __LINE__, fmt, __VA_ARGS__)
+// 命名空间前缀
+#define NAMESPACE_PREFIX hzh::utility
 
-#define INFO(fmt, ...) \
-	Logger::getInstance()->log(Logger::INFO, __FILE__, __LINE__, fmt, __VA_ARGS__)
+// ##__VA_ARGS__ 允许可变参数为空
+#define DEBUG(fmt, ...)                                                                  \
+	NAMESPACE_PREFIX::Logger::getInstance()->log(Logger::DEBUG, __FILE__, __LINE__, fmt, \
+												 ##__VA_ARGS__)
 
-#define WARNING(fmt, ...) \
-	Logger::getInstance()->log(Logger::WARNING, __FILE__, __LINE__, fmt, __VA_ARGS__)
+#define INFO(fmt, ...)                                                                  \
+	NAMESPACE_PREFIX::Logger::getInstance()->log(Logger::INFO, __FILE__, __LINE__, fmt, \
+												 ##__VA_ARGS__)
 
-#define ERROR(fmt, ...) \
-	Logger::getInstance()->log(Logger::ERROR, __FILE__, __LINE__, fmt, __VA_ARGS__)
+#define WARNING(fmt, ...)                                                                  \
+	NAMESPACE_PREFIX::Logger::getInstance()->log(Logger::WARNING, __FILE__, __LINE__, fmt, \
+												 ##__VA_ARGS__)
 
-#define FATAL(fmt, ...) \
-	Logger::getInstance()->log(Logger::FATAL, __FILE__, __LINE__, fmt, __VA_ARGS__)
+#define ERROR(fmt, ...)                                                                  \
+	NAMESPACE_PREFIX::Logger::getInstance()->log(Logger::ERROR, __FILE__, __LINE__, fmt, \
+												 ##__VA_ARGS__)
 
-#define LOG_STDERR(level, fmt, ...)                                  \
-	Logger::getInstance()->logStderr(level, __FILE__, __LINE__, fmt, \
-									 ##__VA_ARGS__) // 允许可变参数为空
+#define FATAL(fmt, ...)                                                                  \
+	NAMESPACE_PREFIX::Logger::getInstance()->log(Logger::FATAL, __FILE__, __LINE__, fmt, \
+												 ##__VA_ARGS__)
 
-#define LOG_STDOUT(level, fmt, ...)                                  \
-	Logger::getInstance()->logStdout(level, __FILE__, __LINE__, fmt, \
-									 ##__VA_ARGS__) // 允许可变参数为空
+#define LOG_STDERR(level, fmt, ...)                                                    \
+	NAMESPACE_PREFIX::Logger::getInstance()->logStderr(level, __FILE__, __LINE__, fmt, \
+													   ##__VA_ARGS__)
+
+#define LOG_STDOUT(level, fmt, ...)                                                    \
+	NAMESPACE_PREFIX::Logger::getInstance()->logStdout(level, __FILE__, __LINE__, fmt, \
+													   ##__VA_ARGS__)
 
 class Logger {
 public:
@@ -70,5 +79,5 @@ private:
 	size_t m_len{};
 };
 
-} // namespace utility
-} // namespace hzh
+}  // namespace utility
+}  // namespace hzh
