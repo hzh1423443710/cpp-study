@@ -84,7 +84,7 @@ bool Logger::logStdout(Level level, const char* file, int line, const char* form
 std::string Logger::makeBuffer(Level level, const char* file, int line, const char* format,
 							   va_list args_ptr) {
 	// [time] [level] [file:line] msg
-	const char* fmt = "[%s] [%s]\t[%s:%d] ";
+	const char* fmt = "[%s] [%s] [%s:%d] ";
 	std::string cur_time = getCurtime();
 	va_list args_ptr_cp;
 	va_copy(args_ptr_cp, args_ptr);
