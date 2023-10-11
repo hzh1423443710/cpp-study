@@ -808,6 +808,41 @@ constexpr bool my_is_same_v = my_is_same<T1,T2>::value;
 
 6. 嵌套类的特化必须写在类外
 
+7. 模板分离声明与定义的问题
+
+​    模板的实例化是在编译阶段，不是链接阶段，只能在当前编译单元查找定义。所以模板的声明和实现都放头文件中，否则会出现链接错误。
+
+**Example:** main.cpp 不知道 a.cpp 要对一个模板做了哪些实例化
+
+​	分离模板 `print` 的声明和定义, a.o 中显示实例化了`print<int>()`, 所以只有`print<int>()`的定义, 没有`print<double>()`的定义. 而main.o中有`print<int>()` 和 `print<double>()` 的声明, 所以链接时main.o无法再a.o中找到`print<double>()的定义`, 导致链接错误.
+
+```c++
+// a.h
+#pragma once
+template<class T> 
+void print(const T& t);
+
+// a.cpp
+#include "a.h"
+#include <iostream>
+
+template<class T> 
+void print(const T& t) {
+    std::cout << __PRETTY_FUNCTION__ << " " << t << "\n";
+}
+template void print<int>(const int&); // 显式实例化
+
+// main.cpp
+#include "a.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) {
+    print(100);  // 链接时可以在a.o里找到定义
+    print(3.14); // 链接时找不到定义
+    return 0;
+}
+```
+
 
 
 
