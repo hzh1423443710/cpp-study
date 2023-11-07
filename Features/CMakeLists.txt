@@ -7,7 +7,7 @@ project(test-CppFeatures)
 add_executable(variant variant/variant.cpp)
 add_executable(tuple tuple/tuple.cpp)
 add_executable(optional optional/optional.cpp)
-add_executable(myany ./any/main.cpp ./any/MyAny.hpp)
+add_executable(myany ./any/main.cpp)
 add_executable(myfunction ./function/main.cpp)
 
 # -- other

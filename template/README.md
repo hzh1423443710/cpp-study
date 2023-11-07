@@ -500,6 +500,8 @@ std::tuple t(4, 3, 2.5); // 同 auto t = std::make_tuple(4, 3, 2.5);
 
 - `std::enable_if<bool,T>`: bool为false**禁用特定的模板实例化**(SFINAE)
 
+例子:详见myany的实现
+
 ```c++
 template <bool _Test, class _Ty = void>
 struct enable_if {}; // no member "type" when !_Test
