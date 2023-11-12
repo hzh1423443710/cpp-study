@@ -14,4 +14,6 @@ add_executable(lambda ./lambda/main.cpp)
 add_executable(explicit other/explicit.cpp)
 add_executable(ifexpr other/Init_statement_for_if.cpp)
 add_executable(StructuredBinding other/StructuredBinding.cpp)
+add_executable(if_constexpr other/if_constexpr.cpp)
+target_compile_options(if_constexpr PRIVATE "-std=c++17")
 
