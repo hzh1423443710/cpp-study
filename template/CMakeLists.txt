@@ -14,8 +14,7 @@ add_executable(TypeDeduction_example ./typeDeduction/TypeDeduction.cpp)
 add_executable(explicit_type_deduction_guide ./typeDeduction/explicit_TDguide.cpp)
 
 # SFINAE
-add_executable(enable_if ./SFINAE/enable_if.cpp)
-add_executable(SFINAE_example1 ./SFINAE/SFINAE.cpp)
+add_executable(SFINAE ./SFINAE/main.cpp)
 
 add_executable(traits traits.cpp)
 # 完美转发
