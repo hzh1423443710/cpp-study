@@ -12,5 +12,7 @@ add_subdirectory(thread)
 add_subdirectory(designPatterns)
 add_subdirectory(EffectiveModernC++)
 add_subdirectory(utility)
+# 惯用手法
+add_subdirectory(idiom)
 
 add_subdirectory(test)
