@@ -8,3 +8,5 @@ add_subdirectory(./CreationalDesignPatterns)
 add_executable(test test.cpp)
 # -- PIMPL
 add_executable(pimpl ./PIMPL/impl.cpp ./PIMPL/impl.h ./PIMPL/main.cpp)
+# 观察者模式
+add_executable(observer observer.cpp)
